@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// HUD.java
+// Created: May 25, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Manages the game's heads-up display. This class:
+// - Handles health and status display
+// - Manages inventory UI elements
+// - Controls minimap and location info
+// - Processes HUD animations
+// - Coordinates with game systems
+/////////////////////////////////////////////////////////////////////////////
+
 package entity;
 
 import java.awt.Color;

@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// Menu.java
+// Created: March 10, 2024
+// Authors: Aun, Ajmal
+// 
+// Description: Manages the main menu system of the game. This class:
+// - Handles menu state and navigation
+// - Renders menu graphics and animations
+// - Processes menu selection and input
+// - Manages transitions between menu states
+// - Coordinates with game settings and options
+/////////////////////////////////////////////////////////////////////////////
+
 package main;
 
 import java.awt.*;

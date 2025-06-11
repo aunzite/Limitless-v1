@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// BossProjectile.java
+// Created: June 3, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Manages boss projectile systems in the game. This class:
+// - Handles projectile behavior and movement
+// - Manages projectile effects
+// - Controls collision detection
+// - Processes projectile state
+// - Coordinates with game systems
+/////////////////////////////////////////////////////////////////////////////
+
 package entity;
 
 import java.awt.*;

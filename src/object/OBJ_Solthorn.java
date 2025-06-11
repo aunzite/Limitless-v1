@@ -1,14 +1,31 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// OBJ_Solthorn.java
+// Created: May 28, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Represents the Solthorn object in the game. This class:
+// - Extends SuperObject for Solthorn-specific behavior
+// - Sets Solthorn image and properties
+// - Used for special events or quests
+// - Can be collected or interacted with
+// - Demonstrates object inheritance
+/////////////////////////////////////////////////////////////////////////////
+
 package object;
 
 import javax.imageio.ImageIO;
-import java.io.File;
+import java.io.IOException;
 
+// OBJ_Solthorn defines the Solthorn special object
 public class OBJ_Solthorn extends SuperObject {
+    // Constructor sets up Solthorn image and name
     public OBJ_Solthorn() {
         name = "Solthorn";
         try {
-            image = ImageIO.read(new File("res/object/solthorn.png"));
-        } catch (Exception e) {
+            // Load Solthorn image from resources
+            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/solthorn.png"));
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }

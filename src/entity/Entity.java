@@ -1,13 +1,15 @@
 /////////////////////////////////////////////////////////////////////////////
 // Limitless
 // Entity.java
+// Created: May 10, 2025
+// Authors: Aun, Ajmal
 // 
 // Description: Base class for all game entities. This class:
-// - Defines core entity properties and states (Aun)
-// - Manages entity positioning and movement (Aun)
-// - Handles sprite animation framework (Aun)
-// - Provides common entity functionality (Aun)
-// - Controls directional state management (Aun)
+// - Defines core entity properties and states
+// - Manages entity positioning and movement
+// - Handles sprite animation framework
+// - Provides common entity functionality
+// - Controls directional state management
 /////////////////////////////////////////////////////////////////////////////
 
 package entity;

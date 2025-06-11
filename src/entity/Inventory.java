@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// Inventory.java
+// Created: May 24, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Manages the player's inventory system. This class:
+// - Handles item storage and management
+// - Controls inventory UI and display
+// - Processes item interactions
+// - Manages inventory state
+// - Coordinates with game systems
+/////////////////////////////////////////////////////////////////////////////
+
 package entity;
 
 import java.awt.*;
