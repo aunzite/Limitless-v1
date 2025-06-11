@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// GifImage.java
+// Created: May 27, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Handles loading and displaying GIF images. This class:
+// - Loads GIF files as animated images
+// - Manages frame timing and playback
+// - Provides methods for rendering GIFs
+// - Supports animation control
+// - Used for animated backgrounds or effects
+/////////////////////////////////////////////////////////////////////////////
+
 package main;
 
 import javax.imageio.*;
@@ -12,21 +26,33 @@ import java.util.Iterator;
 import java.util.List;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import javax.swing.ImageIcon;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
 
+// GifImage class manages animated GIFs
 public class GifImage {
+    // ImageIcon for the GIF
+    private ImageIcon gifIcon;
+    // Current frame image
+    private Image currentFrame;
     private List<BufferedImage> frames;
     private List<Integer> delays;
     private long lastFrameTime;
-    private int currentFrame;
+    private int currentFrameIndex;
     private int width;
     private int height;
     
-    public GifImage(String path) {
+    // Constructor loads GIF from file path
+    public GifImage(String filePath) {
+        gifIcon = new ImageIcon(filePath);
+        currentFrame = gifIcon.getImage();
         frames = new ArrayList<>();
         delays = new ArrayList<>();
         lastFrameTime = System.currentTimeMillis();
-        currentFrame = 0;
-        loadGif(path);
+        currentFrameIndex = 0;
+        loadGif(filePath);
     }
     
     private void loadGif(String path) {
@@ -159,11 +185,26 @@ public class GifImage {
         }
         
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastFrameTime >= delays.get(currentFrame)) {
-            currentFrame = (currentFrame + 1) % frames.size();
+        if (currentTime - lastFrameTime >= delays.get(currentFrameIndex)) {
+            currentFrameIndex = (currentFrameIndex + 1) % frames.size();
             lastFrameTime = currentTime;
         }
         
-        return frames.get(currentFrame);
+        return frames.get(currentFrameIndex);
+    }
+
+    // Draws the GIF at the specified position
+    public void draw(Graphics g, int x, int y, ImageObserver observer) {
+        g.drawImage(currentFrame, x, y, observer);
+    }
+
+    // Returns the width of the GIF
+    public int getWidth() {
+        return gifIcon.getIconWidth();
+    }
+
+    // Returns the height of the GIF
+    public int getHeight() {
+        return gifIcon.getIconHeight();
     }
 } 

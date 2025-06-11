@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// NPC.java
+// Created: May 23, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Manages non-player characters in the game. This class:
+// - Handles NPC behavior and movement
+// - Manages dialogue interactions
+// - Controls NPC animations
+// - Processes NPC state changes
+// - Coordinates with game systems
+/////////////////////////////////////////////////////////////////////////////
+
 // Blank NPC class, needs sprite and behavior later (Ahmed)
 
 package entity;

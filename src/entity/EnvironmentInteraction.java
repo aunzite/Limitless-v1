@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// EnvironmentInteraction.java
+// Created: May 29, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Manages environmental interactions in the game. This class:
+// - Handles interactive object behavior
+// - Manages interaction triggers
+// - Controls interaction responses
+// - Processes interaction states
+// - Coordinates with game systems
+/////////////////////////////////////////////////////////////////////////////
+
 package entity;
 
 import java.awt.Color;

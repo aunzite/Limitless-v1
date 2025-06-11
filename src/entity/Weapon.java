@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// Weapon.java
+// Created: May 30, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Manages weapon systems in the game. This class:
+// - Handles weapon properties and stats
+// - Manages weapon animations
+// - Controls combat mechanics
+// - Processes weapon state
+// - Coordinates with game systems
+/////////////////////////////////////////////////////////////////////////////
+
 package entity;
 
 import java.util.ArrayList;

@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// PauseMenu.java
+// Created: May 30, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Manages the game's pause menu functionality. This class:
+// - Handles pause state and menu display
+// - Provides resume, options, and quit options
+// - Manages pause menu navigation
+// - Coordinates with game state system
+// - Handles pause menu transitions
+/////////////////////////////////////////////////////////////////////////////
+
 package main;
 
 import java.awt.*;
@@ -9,7 +23,7 @@ import java.awt.geom.AffineTransform;
 public class PauseMenu implements MouseListener, MouseMotionListener {
     private GamePanel gp;
     private int selectedOption = 0;
-    private final String[] options = {"Resume", "Main Menu", "Quit"};
+    private final String[] options = {"Resume", "Options", "Save Game", "Quit to Menu"};
     private Font titleFont = new Font("Comic Sans MS", Font.BOLD, 72);
     private Font menuFont = new Font("Comic Sans MS", Font.PLAIN, 36);
     private Rectangle[] optionBounds;
@@ -77,13 +91,14 @@ public class PauseMenu implements MouseListener, MouseMotionListener {
             case 0: // Resume
                 gp.gameState = GamePanel.PLAY_STATE;
                 break;
-            case 1: // Main Menu
-                audioManager.stopMusic(); // Stop current music
-                audioManager.playMainMenuMusic(); // Play menu music
-                gp.gameState = GamePanel.MENU_STATE;
+            case 1: // Options
+                gp.gameState = GamePanel.OPTIONS_STATE;
                 break;
-            case 2: // Quit
-                System.exit(0);
+            case 2: // Save Game
+                gp.saver.saveGame();
+                break;
+            case 3: // Quit to Menu
+                gp.gameState = GamePanel.MENU_STATE;
                 break;
         }
     }

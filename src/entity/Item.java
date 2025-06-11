@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// Item.java
+// Created: June 2, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Manages item systems in the game. This class:
+// - Handles item properties and effects
+// - Manages item interactions
+// - Controls item state
+// - Processes item usage
+// - Coordinates with game systems
+/////////////////////////////////////////////////////////////////////////////
+
 package entity;
 
 import java.awt.image.BufferedImage;

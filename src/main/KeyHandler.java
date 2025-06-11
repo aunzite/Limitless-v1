@@ -1,13 +1,15 @@
 /////////////////////////////////////////////////////////////////////////////
 // Limitless
 // KeyHandler.java
+// Created: May 15, 2025
+// Authors: Aun, Ajmal
 // 
-// Description: Keyboard input handler for the game. This class:
-// - Implements KeyListener interface for input handling (Aun)
-// - Tracks WASD movement key states (Aun)
-// - Manages sprint modifier with shift key (Aun)
-// - Adds Enter key support for dialogue interactions (Aun)
-// - Updates movement flags based on key events (Aun)
+// Description: Handles keyboard input and controls for the game. This class:
+// - Manages keyboard event processing and state tracking
+// - Controls player movement and actions
+// - Handles menu navigation and interaction
+// - Processes game state changes based on input
+// - Coordinates with other game systems for input response
 /////////////////////////////////////////////////////////////////////////////
 
 package main;
@@ -41,6 +43,9 @@ public class KeyHandler implements KeyListener {
     public boolean deletePressed;  // F7 key for deleting save
     public boolean iPressed;       // I key for inventory
     public boolean spacePressed;   // Space key for attack
+
+    // Debug key states
+    public boolean debugPressed;
 
     public KeyHandler(Saver saver, HUD hud) {
         this.saver = saver;
@@ -83,6 +88,7 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_H -> hud.setShowAttackHistory(!hud.isShowAttackHistory()); //Attack history (Ahmed)
             case KeyEvent.VK_I -> iPressed = true;         // Inventory toggle
             case KeyEvent.VK_SPACE -> { spacePressed = true; if (gp != null && gp.player != null) gp.player.handleSpacePressed(); }
+            case KeyEvent.VK_F3 -> debugPressed = true;
         }
         saver.handleInput(savePressed, loadPressed, deletePressed);
     }
@@ -107,6 +113,7 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_F7 -> deletePressed = false; 
             case KeyEvent.VK_I -> iPressed = false;        // Inventory toggle released
             case KeyEvent.VK_SPACE -> spacePressed = false;
+            case KeyEvent.VK_F3 -> debugPressed = false;
         }
         saver.handleInput(savePressed, loadPressed, deletePressed);
     }

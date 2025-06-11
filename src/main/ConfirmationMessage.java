@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// ConfirmationMessage.java
+// Created: March 16, 2024
+// Authors: Aun, Ajmal
+// 
+// Description: Manages confirmation dialogs and messages in the game. This class:
+// - Handles user confirmation prompts
+// - Manages message display and timing
+// - Processes user responses
+// - Controls message animations
+// - Coordinates with game state system
+/////////////////////////////////////////////////////////////////////////////
+
 package main;
 
 import javax.swing.*;
