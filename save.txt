@@ -1,0 +1,8 @@
+playerX
+2168
+playerY
+4132
+direction
+down
+weapon
+Solthorn
