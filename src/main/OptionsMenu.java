@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// OptionsMenu.java
+// Created: May 25, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Manages the game's options and settings menu. This class:
+// - Handles display and audio settings
+// - Manages control configurations
+// - Processes user preferences
+// - Saves and loads settings
+// - Provides interface for game customization
+/////////////////////////////////////////////////////////////////////////////
+
 package main;
 
 import java.awt.*;
@@ -31,6 +45,23 @@ public class OptionsMenu implements MouseListener, MouseMotionListener {
     private Font menuFont = new Font("Comic Sans MS", Font.PLAIN, 36);
     
     private GifImage backgroundGif;
+    
+    // Settings categories
+    public static final int DISPLAY = 0;
+    public static final int AUDIO = 1;
+    public static final int CONTROLS = 2;
+    public static final int BACK = 3;
+    
+    // Current settings category
+    private int currentCategory = DISPLAY;
+    
+    // Selection index for current category
+    private int selectionIndex = 0;
+    
+    // Settings options arrays
+    private String[] displayOptions = {"Fullscreen", "Resolution", "VSync", "Back"};
+    private String[] audioOptions = {"Master Volume", "Music Volume", "SFX Volume", "Back"};
+    private String[] controlOptions = {"Key Bindings", "Controller", "Back"};
     
     public OptionsMenu(GamePanel gp) {
         this.gp = gp;
@@ -84,6 +115,25 @@ public class OptionsMenu implements MouseListener, MouseMotionListener {
             gp.gameState = GamePanel.MENU_STATE;
             gp.keyH.escapePressed = false;
         }
+        
+        // Process menu navigation
+        if(gp.keyH.upPressed) {
+            selectionIndex--;
+            if(selectionIndex < 0) {
+                selectionIndex = getCurrentOptions().length - 1;
+            }
+        }
+        if(gp.keyH.downPressed) {
+            selectionIndex++;
+            if(selectionIndex >= getCurrentOptions().length) {
+                selectionIndex = 0;
+            }
+        }
+        
+        // Process menu selection
+        if(gp.keyH.enterPressed) {
+            handleSelection();
+        }
     }
     
     public void draw(Graphics2D g2) {
@@ -131,6 +181,23 @@ public class OptionsMenu implements MouseListener, MouseMotionListener {
         
         // Draw back button
         drawBackButton(g2);
+        
+        // Draw current category options
+        String[] options = getCurrentOptions();
+        for(int i = 0; i < options.length; i++) {
+            String text = options[i];
+            int x = getXForCenteredText(text, g2);
+            int y = gp.screenHeight/2 + i * 50;
+            
+            // Highlight selected option
+            if(i == selectionIndex) {
+                g2.setColor(Color.YELLOW);
+            } else {
+                g2.setColor(Color.WHITE);
+            }
+            
+            g2.drawString(text, x, y);
+        }
     }
     
     private void drawAutoSaveToggle(Graphics2D g2) {
@@ -248,4 +315,87 @@ public class OptionsMenu implements MouseListener, MouseMotionListener {
     
     @Override
     public void mouseDragged(MouseEvent e) {}
+    
+    // Helper method to center text horizontally
+    private int getXForCenteredText(String text, Graphics2D g2) {
+        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        return gp.screenWidth/2 - length/2;
+    }
+    
+    // Gets current options array based on category
+    private String[] getCurrentOptions() {
+        switch(currentCategory) {
+            case DISPLAY: return displayOptions;
+            case AUDIO: return audioOptions;
+            case CONTROLS: return controlOptions;
+            default: return displayOptions;
+        }
+    }
+    
+    // Handles option selection
+    private void handleSelection() {
+        String[] options = getCurrentOptions();
+        String selected = options[selectionIndex];
+        
+        if(selected.equals("Back")) {
+            currentCategory = DISPLAY;
+            selectionIndex = 0;
+            return;
+        }
+        
+        // Process selected option
+        switch(currentCategory) {
+            case DISPLAY:
+                handleDisplayOption(selected);
+                break;
+            case AUDIO:
+                handleAudioOption(selected);
+                break;
+            case CONTROLS:
+                handleControlOption(selected);
+                break;
+        }
+    }
+    
+    // Handles display option selection
+    private void handleDisplayOption(String option) {
+        switch(option) {
+            case "Fullscreen":
+                gp.toggleFullscreen();
+                break;
+            case "Resolution":
+                // Handle resolution change
+                break;
+            case "VSync":
+                // Toggle VSync
+                break;
+        }
+    }
+    
+    // Handles audio option selection
+    private void handleAudioOption(String option) {
+        switch(option) {
+            case "Master Volume":
+                // Adjust master volume
+                break;
+            case "Music Volume":
+                // Adjust music volume
+                break;
+            case "SFX Volume":
+                // Adjust SFX volume
+                break;
+        }
+    }
+    
+    // Handles control option selection
+    private void handleControlOption(String option) {
+        switch(option) {
+            case "Key Bindings":
+                // Show key binding menu
+                break;
+            case "Controller":
+                // Show controller settings
+                break;
+        }
+    }
 } 

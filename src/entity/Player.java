@@ -1,13 +1,15 @@
 /////////////////////////////////////////////////////////////////////////////
 // Limitless
 // Player.java
+// Created: May 21, 2025
+// Authors: Aun, Ajmal
 // 
-// Description: Main player character class. This class:
-// - Handles player movement and controls (Aun)
-// - Manages sprite animations and rendering (Aun)
-// - Controls player position and camera centering (Aun)
-// - Processes keyboard input for movement (Aun)
-// - Implements sprinting mechanics (Aun)
+// Description: Manages the player character and their interactions. This class:
+// - Handles player movement and controls
+// - Manages player stats and inventory
+// - Controls combat and interactions
+// - Processes player animations
+// - Coordinates with game systems
 /////////////////////////////////////////////////////////////////////////////
 
 package entity;

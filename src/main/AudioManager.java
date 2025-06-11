@@ -1,8 +1,23 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// AudioManager.java
+// Created: June 3, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Manages all audio playback and sound effects in the game. This class:
+// - Controls background music playback
+// - Handles sound effect management
+// - Manages audio volume and settings
+// - Processes audio state changes
+// - Provides audio resource loading
+/////////////////////////////////////////////////////////////////////////////
+
 package main;
 
 import java.io.File;
 import java.io.IOException;
 import javax.sound.sampled.*;
+import java.util.Map;
 
 public class AudioManager {
     private static AudioManager instance;

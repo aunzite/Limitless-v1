@@ -1,23 +1,27 @@
-package entity;
-import java.util.ArrayList;
-
 /////////////////////////////////////////////////////////////////////////////
 // Limitless
 // Dialogue.java
-//
+// Created: May 16, 2025
+// Authors: Aun, Ajmal
+// 
 // Description: Stores and manages dialogue text for NPCs or story events. 
 // - Holds and updates the current line of dialogue 
 // - Stores a full history of all dialogue lines using an ArrayList 
 // - Provides access to dialogue text 
 // - Allows adding new lines dynamically via user input 
 // - Clears or resets dialogue after interaction 
-// - Returns dialogue text via toString 
 /////////////////////////////////////////////////////////////////////////////
 
+package entity;
+import java.util.ArrayList;
+
+// Dialogue class manages dialogue lines and history
 public class Dialogue {
 
     // Attribute 
-    private String currentLine;  // Stores the current dialogue line to display
+    // Stores the current dialogue line to display
+    private String currentLine;
+    // Stores the history of all dialogue lines
     private ArrayList<String> history;
 
     // Constructor 

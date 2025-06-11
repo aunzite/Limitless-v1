@@ -1,8 +1,23 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// OBJ_Apple.java
+// Created: May 18, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Represents an apple object in the game. This class:
+// - Extends SuperObject for apple-specific behavior
+// - Sets apple image and properties
+// - Can be collected by the player
+// - Used for health or quest purposes
+// - Demonstrates object inheritance
+/////////////////////////////////////////////////////////////////////////////
+
 package object;
 
 import javax.imageio.ImageIO;
-import java.io.File;
+import java.io.IOException;
 
+// OBJ_Apple defines the apple collectible object
 public class OBJ_Apple extends SuperObject {
     public int quantity = 1;
 
@@ -13,8 +28,8 @@ public class OBJ_Apple extends SuperObject {
         name = "Apple";
         this.quantity = quantity;
         try {
-            image = ImageIO.read(new File("res/object/apple.png"));
-        } catch (Exception e) {
+            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/apple.png"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

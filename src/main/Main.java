@@ -1,43 +1,39 @@
 /////////////////////////////////////////////////////////////////////////////
 // Limitless
 // Main.java
+// Created: June 5, 2025
+// Authors: Aun, Ajmal
 // 
-// Description: Main entry point for the game. This class:
-// - Creates and configures the game window (Aun)
-// - Sets up the main game panel (Aun)
-// - Initializes display settings (Aun)
-// - Launches the game thread (Aun)
+// Description: Entry point for the Limitless game. This class:
+// - Initializes the main game window
+// - Sets up the game panel and frame
+// - Starts the game loop
+// - Handles application startup
+// - Coordinates initial game setup
 /////////////////////////////////////////////////////////////////////////////
 
 package main;
 
 import javax.swing.JFrame;
 
-// Main class that initializes and launches the game
+// Main class launches the game
 public class Main {
-    
-    // Entry point of the application
-    // Creates and configures the game window
     public static void main(String[] args) {
+        // Create the main game window (JFrame)
+        JFrame window = new JFrame("Limitless");
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(false);
 
-        // Create and set up the game window
-        JFrame window = new JFrame();                              // Create window container
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);     // Enable proper program termination
-        window.setResizable(false);                                // Lock window size
-        window.setTitle("Limitless");                           // Set window title bar text
+        // Create and add the main game panel
+        GamePanel gamePanel = new GamePanel(window);
+        window.add(gamePanel);
+        window.pack();
 
-        // Initialize game components
-        GamePanel gamePanel = new GamePanel(window);               // Create main game panel with window reference
-        window.add(gamePanel);                                     // Add game panel to window
+        // Center the window on the screen
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
 
-        // Configure window display
-        window.pack();                                             // Resize window to fit game panel
-        window.setLocationRelativeTo(null);                        // Center window on screen
-        window.setVisible(true);                                   // Display the window
-
-        gamePanel.setupGame();
-
-        // Start the game
-        gamePanel.startGameThread();                               // Begin game loop execution
+        // Start the game loop
+        gamePanel.startGameThread();
     }
 }

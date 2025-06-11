@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// BossNoxar.java
+// Created: May 26, 2025
+// Authors: Aun, Ajmal
+// 
+// Description: Manages the Noxar boss character and combat. This class:
+// - Handles boss behavior and AI
+// - Manages boss combat mechanics
+// - Controls boss animations
+// - Processes boss state changes
+// - Coordinates with game systems
+/////////////////////////////////////////////////////////////////////////////
+
 package entity;
 
 import java.awt.*;

@@ -1,33 +1,31 @@
 /////////////////////////////////////////////////////////////////////////////
 // Limitless
 // Tile.java
+// Created: May 14, 2025
+// Authors: Aun, Ajmal
 // 
-// Description: Base tile class for the game's world. This class:
-// - Represents individual map tiles (Aun)
-// - Manages tile properties and collision states (Aun)
-// - Handles tile image loading and storage (Aun)
-// - Provides basic tile functionality (Aun)
+// Description: Represents a single tile in the game world. This class:
+// - Stores tile image and collision state
+// - Used for map rendering and collision detection
+// - Supports different tile types (e.g., grass, water)
+// - Provides tile property management
+// - Serves as a building block for the world
 /////////////////////////////////////////////////////////////////////////////
 
 package tile;
 
 import java.awt.image.BufferedImage;
 
-// Represents a single tile in the game world
-// Used for building the game map and handling tile-based collisions
+// Tile class represents a single map tile
 public class Tile {
-    
-    // The visual representation of the tile
-    // Loaded from an image file and rendered to the screen
+    // Image for the tile
     public BufferedImage image;
-
-    // Determines if entities can pass through this tile
-    // true = solid/blocked, false = passable
+    // Collision flag (true if tile is solid)
     public boolean collision = false;
 
-    // Default constructor creates a basic tile with no collision
-    public Tile() {
-        this.image = null;
-        this.collision = false;
+    // Constructor for a tile with image and collision state
+    public Tile(BufferedImage image, boolean collision) {
+        this.image = image;
+        this.collision = collision;
     }
 }

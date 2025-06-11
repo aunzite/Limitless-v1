@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Limitless
+// AssetSetter.java
+// Created: March 7, 2024
+// Authors: Aun, Ajmal
+// 
+// Description: Manages game asset placement and initialization. This class:
+// - Handles object placement in the world
+// - Manages NPC positioning
+// - Controls item spawn locations
+// - Processes world object initialization
+// - Coordinates with game world system
+/////////////////////////////////////////////////////////////////////////////
+
 package main;
 import object.OBJ_Apple;
 import object.OBJ_Key;

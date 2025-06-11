@@ -1,13 +1,15 @@
 /////////////////////////////////////////////////////////////////////////////
 // Limitless
 // Saver.java
+// Created: June 1, 2025
+// Authors: Aun, Ajmal
 // 
-// Description: Manages game save/load functionality. This class:
-// - Handles saving game state to file (Aun)
-// - Manages loading saved game data (Aun)
-// - Controls player position persistence (Aun)
-// - Processes save/load/delete commands (Aun)
-// - Implements file I/O operations (Aun)
+// Description: Handles game save and load functionality. This class:
+// - Manages save file creation and storage
+// - Handles game state serialization
+// - Processes save file loading
+// - Manages save slots and data
+// - Provides save/load error handling
 /////////////////////////////////////////////////////////////////////////////
 
 package main;
@@ -15,154 +17,102 @@ import java.io.*;
 import javax.swing.JFrame;
 import entity.Weapon;
 
+// Saver class manages game save and load operations
 public class Saver {
-    // Reference to main game panel and player state variables
+    // Game panel reference for state management
     private GamePanel gp;
-    private int playerX;        // Player's X coordinate in world
-    private int playerY;        // Player's Y coordinate in world
-    private String direction;   // Player's facing direction
-    private JFrame frame;       // Reference to the main frame for showing messages
-
-    // Constructor: Sets up initial player position and direction
+    
+    // Save file directory
+    private static final String SAVE_DIR = "saves/";
+    
+    // Save slot constants
+    public static final int SAVE_SLOT_1 = 0;
+    public static final int SAVE_SLOT_2 = 1;
+    public static final int SAVE_SLOT_3 = 2;
+    
+    // Current save slot
+    private int currentSlot = SAVE_SLOT_1;
+    
+    // Constructor initializes saver with game panel reference
     public Saver(GamePanel gp) {
         this.gp = gp;
-        this.frame = gp.frame;  // Use the frame from GamePanel
-        this.playerX = gp.tileSize*12;    // Default spawn X
-        this.playerY = gp.tileSize*10;    // Default spawn Y
-        this.direction = "down";          // Default direction
+        createSaveDirectory();
     }
-
-    // Getter methods for player state
-    public int getPlayerX() { 
-        return playerX; 
+    
+    // Creates save directory if it doesn't exist
+    private void createSaveDirectory() {
+        File saveDir = new File(SAVE_DIR);
+        if (!saveDir.exists()) {
+            saveDir.mkdirs();
+        }
     }
-    public int getPlayerY() { 
-        return playerY; 
-    }
-    public String getDirection() { 
-        return direction; 
-    }
-
-    // Setter methods for player state
-    public void setPlayerX(int playerX) { 
-        this.playerX = playerX; 
-    }
-    public void setPlayerY(int playerY) { 
-        this.playerY = playerY; 
-    }
-    public void setDirection(String direction) { 
-        this.direction = direction; 
-    }
-
-
-    // Saves current game state to file
-    public void saveGame(int playerX, int playerY, String direction) {
-        // Update local state variables
-        setPlayerX(playerX);
-        setPlayerY(playerY);
-        setDirection(direction);
-
+    
+    // Saves game state to file
+    public void saveGame(int slot, int playerX, int playerY) {
         try {
-            // Set up file writers
-            FileWriter fw = new FileWriter("save.txt");
-            PrintWriter pw = new PrintWriter(fw);
-
-            // Write player position and direction
-            pw.println("playerX\n" + getPlayerX());
-            pw.println("playerY\n" + getPlayerY());
-            pw.println("direction\n" + getDirection());
+            // Create save data object
+            SaveData saveData = new SaveData();
+            saveData.playerX = playerX;
+            saveData.playerY = playerY;
+            saveData.gameState = gp.gameState;
+            saveData.inventory = gp.player.inventory;
             
-            // Save weapon state
-            if (gp.player.weapon != null) {
-                pw.println("weapon\n" + gp.player.weapon.getName());
-            } else {
-                pw.println("weapon\nnull");
-            }
-
-            // Cleanup
-            pw.close();
-            fw.close();
+            // Serialize and save data
+            FileOutputStream fos = new FileOutputStream(SAVE_DIR + "save" + slot + ".dat");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(saveData);
+            oos.close();
+            fos.close();
             
-            // Show confirmation message centered in game area
-            new ConfirmationMessage("Game Saved!").showMessage(frame);
+            // Show save confirmation
+            gp.showMessage("Game saved successfully!");
         } catch (IOException e) {
+            gp.showMessage("Error saving game!");
             e.printStackTrace();
         }
     }
-
-    // Resets save file to default values
-    public void deleteSave() {
-        File saveFile = new File("save.txt");
-        if (!saveFile.exists()) {
-            new ConfirmationMessage("No save file exists!").showMessage(frame);
-            return;
-        }
-        saveGame(gp.tileSize*12, gp.tileSize*10, "down");
-        new ConfirmationMessage("Save Deleted!").showMessage(frame);
-    }
-
-    // Loads game state from save file
-    public void loadGame() {
-        File saveFile = new File("save.txt");
-        if (!saveFile.exists()) {
-            new ConfirmationMessage("No save file exists!").showMessage(frame);
-            return;
-        }
-
+    
+    // Loads game state from file
+    public void loadGame(int slot) {
         try {
-            // Set up file readers
-            FileReader fr = new FileReader(saveFile);
-            BufferedReader br = new BufferedReader(fr);
-
-            // Read file line by line
-            String line;
-            while ((line = br.readLine()) != null) {
-                // Process each type of saved data
-                switch (line) {
-                    case "playerX":
-                        setPlayerX(Integer.parseInt(br.readLine()));
-                        break;
-                    case "playerY":
-                        setPlayerY(Integer.parseInt(br.readLine()));
-                        break;
-                    case "direction":
-                        setDirection(br.readLine());
-                        break;
-                    case "weapon":
-                        String weaponName = br.readLine();
-                        if (!weaponName.equals("null")) {
-                            gp.player.weapon = new Weapon(weaponName, 25, 1.0, "sword");
-                        } else {
-                            gp.player.weapon = null;
-                        }
-                        break;
-                }
-            }
-            // Update player with loaded values
-            gp.player.setValues(getPlayerX(), getPlayerY(), getDirection());
-
-            // Cleanup
-            br.close();
-            fr.close();
+            // Load and deserialize data
+            FileInputStream fis = new FileInputStream(SAVE_DIR + "save" + slot + ".dat");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            SaveData saveData = (SaveData) ois.readObject();
+            ois.close();
+            fis.close();
             
-            // Show confirmation message
-            new ConfirmationMessage("Game Loaded!").showMessage(frame);
-        } catch (IOException e) {
-            new ConfirmationMessage("Error loading save file!").showMessage(frame);
+            // Apply loaded data
+            gp.player.worldX = saveData.playerX;
+            gp.player.worldY = saveData.playerY;
+            gp.gameState = saveData.gameState;
+            gp.player.inventory = saveData.inventory;
+            
+            // Show load confirmation
+            gp.showMessage("Game loaded successfully!");
+        } catch (IOException | ClassNotFoundException e) {
+            gp.showMessage("Error loading game!");
             e.printStackTrace();
         }
     }
-
-    // Handles keyboard input for save/load/delete operations
-    public void handleInput(boolean savePressed, boolean loadPressed, boolean deletePressed) {
-        if (savePressed) {
-            saveGame(gp.player.worldX, gp.player.worldY, gp.player.direction);        
+    
+    // Deletes save file
+    public void deleteSave(int slot) {
+        File saveFile = new File(SAVE_DIR + "save" + slot + ".dat");
+        if (saveFile.exists()) {
+            saveFile.delete();
+            gp.showMessage("Save file deleted!");
+        } else {
+            gp.showMessage("No save file found!");
         }
-        if (loadPressed) {
-            loadGame();
-        }
-        if (deletePressed) {
-            deleteSave();
-        }
+    }
+    
+    // Save data class for serialization
+    private static class SaveData implements Serializable {
+        private static final long serialVersionUID = 1L;
+        public int playerX;
+        public int playerY;
+        public int gameState;
+        public Inventory inventory;
     }
 }
